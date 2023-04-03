@@ -16,7 +16,7 @@ const NftController = {
         const
         _wallet_addr = req.body.walletAddress,
         _store_name = req.body.store_name,
-        _store_id = req.body.store_id,
+        _store_id = req.body.res_store_id,
         _country_id = req.body.store_country,
         _blockHash = req.body.blockHash
 

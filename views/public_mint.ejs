@@ -253,16 +253,12 @@ async function publicMint() {
     let store_id;
     if(document.getElementById('india').checked) {
         store_country = 1;
-        store_id = 100000;
     }else if(document.getElementById('indonesia').checked) {
         store_country = 2;
-        store_id = 200000;
     }else if(document.getElementById('philippines').checked) {
         store_country = 3;
-        store_id = 300000;
     }else if(document.getElementById('vietnam').checked) {
         store_country = 4;
-        store_id = 400000;
     }
     const contract = new web3.eth.Contract(ABI, CONTRACTADDRESS);
     await contract.methods.getMintInfo().call()
@@ -279,16 +275,12 @@ async function publicMint() {
             document.getElementById("ve_count").innerHTML = `베트남 STORE NFT: ${ve_count}개`;
 
             if(store_country === 1){
-                store_id = store_id + (in_count + 1);
                 nft_ipfs = INDIA_URL;
             }else if(store_country === 2){
-                store_id = store_id + (indone_count + 1);
                 nft_ipfs = INDONESIA_URL;
             }else if(store_country === 3){
-                store_id = store_id + (phy_count + 1);
                 nft_ipfs = PHYLIPIN_URL;
             }else if(store_country === 4){
-                store_id = store_id + (ve_count + 1);
                 nft_ipfs = VETNAM_URL;
             }
           
@@ -305,7 +297,6 @@ async function publicMint() {
  try {
         const gasAmount = await contract.methods.mintDeckilaStore(store_name,
                                                             store_country,
-                                                            store_id,
                                                             10,
                                                             nft_ipfs).estimateGas({
             from: walletAddress,
@@ -313,20 +304,22 @@ async function publicMint() {
         })
         const result = await contract.methods.mintDeckilaStore(store_name,
                                                             store_country,
-                                                            store_id,
                                                             10,
                                                             nft_ipfs).send({
             from: walletAddress,
             gas: gasAmount
         })
+
+        const res_store_id = (result.events.Transfer.returnValues.tokenId*1);
         if (result != null) {
             console.log(result);
             blockHash = result.transactionHash;
+        
 
             $.ajax({
                 url:'/mint',
                 async: true,
-                data: {walletAddress,store_name,store_id,store_country,blockHash
+                data: {walletAddress,store_name,res_store_id,store_country,blockHash
                 },
                 type:'post',
                 dataType:'json',
