@@ -15,8 +15,8 @@ async function init_meta(callback){
     console.log(metadata_1.url);
 
     const metadata_2 = await client.store({
-        name : 'deckila store Thailand ownership NFT',
-        description : 'deckila store Thailand ownership NFT',
+        name : 'deckila store Indonesia ownership NFT',
+        description : 'deckila store Indonesia ownership NFT',
         image : new File([fs.readFileSync(__dirname+"/public/2.gif")], "2.gif", { type: "image/gif"})
     });
 

@@ -74,6 +74,7 @@ const NftController = {
         
     },
     meta(req,res){
+        console.log('meta');
         NftMeta.init_meta();
     }
 }
